@@ -62,11 +62,17 @@ bayr.predict(x_prediction)
 #%% 2. Replace the nan values in S1 with the predicted values for s1 from the random-forest regressor we used in class
 data.insert(50, 'p')
 
-np.append(data, p, axis=None)
+data[0:50]
+data.S1.insert[50:] = p
+data.S1[50::]
+
+np.append(data, p, axis=0)
 #%%Replace the columns of s5 from rows 50-100 with nan just like how s1 was initially.
 
 data.empty((50, 5))
 np.delete(data, 5, 0)
+
+new_data = data.iloc[:-50, :].copy()
 
 #%% Perform regression using at least 5 random regression algorithms but use a function to calculate score and print out the same.
 
