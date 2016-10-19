@@ -31,7 +31,7 @@ y=np.asarray(data['S1'][0:50])
 #Takes all 100 values of the rest of the table
 x=data[['S2','S3','S4','S5','S6','S7','S10']]
 xdata=x.as_matrix()
-#extracts first 50 of the rest of column
+#extracts first 50 of the rest of columns
 x=xdata[0:50,:]
 x_prediction=xdata[50:100,:]
 
@@ -60,65 +60,82 @@ print (bayr.score(X_val, Y_val))
 
 bayr.predict(x_prediction)
 #%% 2. Replace the nan values in S1 with the predicted values for s1 from the random-forest regressor we used in class
-data.insert(50, 'p')
+#data.insert(50, 'p')
+#
+#data[0:50]
+#data.S1.insert[50:] = p
+#data.S1[50::]
+#
+#np.append(data, p, axis=0)
 
-data[0:50]
-data.S1.insert[50:] = p
-data.S1[50::]
-
-np.append(data, p, axis=0)
+data['S1'][50:100] = p
 #%%Replace the columns of s5 from rows 50-100 with nan just like how s1 was initially.
 
-data.empty((50, 5))
-np.delete(data, 5, 0)
+#data.empty((50, 5))
+#np.delete(data, 5, 0)
+#
+#new_data = data.iloc[:-50, :].copy()
 
-new_data = data.iloc[:-50, :].copy()
+data['S5'][50:100] = float('NaN')
 
 #%% Perform regression using at least 5 random regression algorithms but use a function to calculate score and print out the same.
+#S5 prediction 
+ys5=np.asarray(data['S5'][0:50])
 
-#RandomForestRegressor() 81%
+#Takes all 100 values of the rest of the table
+xs5=data[['S2','S3','S4','S1','S6','S7','S10']]
+xs5data=xs5.as_matrix()
+#extracts first 50 of the rest of columns
+xs5=xs5data[0:50,:]
+xs5_prediction=xs5data[50:100,:]
+
+Xs5_train, Xs5_val, Ys5_train, Ys5_val = cross_validation.train_test_split(xs5,ys5, test_size=0.7, random_state=0)
+
+#RandomForestRegressor() 90%
 
 RFR = RandomForestRegressor()
-RFR.fit(X_train, Y_train)
-print(RFR.score(X_val, Y_val))
+RFR.fit(Xs5_train, Ys5_train)
+print(RFR.score(Xs5_val, Ys5_val))
 # Fit the model using all the available data
-RFR.fit(X_train, Y_train)
+RFR.fit(Xs5_train, Ys5_train)
 
-#ARD 79%
+RFR.predict(xs5_prediction)
+
+#ARD 96%
 from sklearn import linear_model
 
 ARD = linear_model.ARDRegression()
-ARD.fit(X_train, Y_train)
-print (ARD.score(X_val, Y_val))
+ARD.fit(Xs5_train, Ys5_train)
+print (ARD.score(Xs5_val, Ys5_val))
 
-ARD.predict(x_prediction)
+ARD.predict(xs5_prediction)
 
-#LR 77%
+#LR 93%
 from sklearn import linear_model
 
 LR = linear_model.LinearRegression()
-LR.fit(X_train, Y_train)
-print (LR.score(X_val, Y_val))
+LR.fit(Xs5_train, Ys5_train)
+print (LR.score(Xs5_val, Ys5_val))
 
-LR.predict(x_prediction)
+LR.predict(xs5_prediction)
 
-#RANSACRegressor -200%
+#RANSACRegressor 86%
 from sklearn import linear_model
 
 RAN = linear_model.RANSACRegressor()
-RAN.fit(X_train, Y_train)
-print (RAN.score(X_val, Y_val))
+RAN.fit(Xs5_train, Ys5_train)
+print (RAN.score(Xs5_val, Ys5_val))
 
-RAN.predict(x_prediction)
+RAN.predict(xs5_prediction)
 
-#TheilSenRegressor 60%
+#TheilSenRegressor 85%
 from sklearn import linear_model
 
 TSR = linear_model.TheilSenRegressor()
-TSR.fit(X_train, Y_train)
-print (TSR.score(X_val, Y_val))
+TSR.fit(Xs5_train, Ys5_train)
+print (TSR.score(Xs5_val, Ys5_val))
 
-TSR.predict(x_prediction)
+TSR.predict(xs5_prediction)
 
 #%%
-Best model is RFR = RandomForestRegressor() with 81%
+Best model is ADR = ARDRegression() with 96%
