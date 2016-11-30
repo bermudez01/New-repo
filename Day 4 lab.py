@@ -5,8 +5,6 @@ Created on Fri Oct 14 12:59:33 2016
 
 @author: Ray
 
-Created on Mon Jul 18 21:19:32 2016
-@author: anandpreshob
 This code is for stock prediction one machine learning challenge
 Given a dataset that consists of the (simulated) daily open­to­close changes of a set of 10
 stocks: S1, S2, …, S10. Stock S1 trades in the U.S. as part of the S&P 500 Index, while stocks S2, S3, …,
