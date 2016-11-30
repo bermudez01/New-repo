@@ -2,7 +2,7 @@
 """
 Created on Thu Oct 06 18:36:36 2016
 HOL for day 2
-@author: anandpreshob
+@author: Ray
 """
 #%%
 import numpy as np
